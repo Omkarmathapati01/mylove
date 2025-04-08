@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Catch the Tulip</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #fff0f5;
+      font-family: 'Comic Sans MS', cursive;
+    }
+    #gameCanvas {
+      display: block;
+      margin: 0 auto;
+      background: #ffe6f0;
+      border: 5px solid #ff69b4;
+      border-radius: 20px;
+    }
+    #messageBox {
+      display: none;
+      text-align: center;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px pink;
+      font-size: 1.2rem;
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #ff1493;
+    }
+    .btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border-radius: 20px;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="gameCanvas" width="400" height="500"></canvas>
+
+<div id="messageBox">
+  <h2>🌷 You did it, Kanishka! 🌷</h2>
+  <p>Now open the next page... someone special has a message for you 💌</p>
+  <button class="btn" onclick="location.href='proposal.html'">See the Surprise ➡️</button>
+</div>
+
+<script>
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
+
+  let kitty = { x: 160, y: 440, width: 80, height: 80 };
+  let tulips = [];
+  let score = 0;
+  let tulipImg = new Image();
+  let kittyImg = new Image();
+
+  tulipImg.src = 'tulip.png'; // 🌷 Tulip image (add in folder)
+  kittyImg.src = 'kitty-catch.png'; // 🐱 Kitty image (add in folder)
+
+  function drawKitty() {
+    ctx.drawImage(kittyImg, kitty.x, kitty.y, kitty.width, kitty.height);
+  }
+
+  function drawTulips() {
+    tulips.forEach(t => {
+      ctx.drawImage(tulipImg, t.x, t.y, 40, 40);
+      t.y += 3;
+    });
+  }
+
+  function detectCatch() {
+    tulips.forEach((t, i) => {
+      if (
+        t.x < kitty.x + kitty.width &&
+        t.x + 40 > kitty.x &&
+        t.y < kitty.y + kitty.height &&
+        t.y + 40 > kitty.y
+      ) {
+        tulips.splice(i, 1);
+        score++;
+        if (score >= 10) {
+          document.getElementById('gameCanvas').style.display = 'none';
+          document.getElementById('messageBox').style.display = 'block';
+        }
+      }
+    });
+  }
+
+  function gameLoop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawKitty();
+    drawTulips();
+    detectCatch();
+    requestAnimationFrame(gameLoop);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft' && kitty.x > 0) kitty.x -= 20;
+    if (e.key === 'ArrowRight' && kitty.x < 320) kitty.x += 20;
+  });
+
+  setInterval(() => {
+    let x = Math.random() * 360;
+    tulips.push({ x, y: 0 });
+  }, 1000);
+
+  kittyImg.onload = () => {
+    gameLoop();
+  };
+</script>
+
+</body>
+</html>

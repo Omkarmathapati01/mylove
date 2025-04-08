@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hello Kanishka</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', cursive;
+      background-color: #fff0f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    h1 {
+      color: #ff69b4;
+      margin-top: 20px;
+    }
+    p {
+      color: #d63384;
+      font-size: 1.2rem;
+      max-width: 600px;
+    }
+    .kitty {
+      width: 200px;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .start-btn {
+      background-color: #ff69b4;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      font-size: 1rem;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    .start-btn:hover {
+      background-color: #ff1493;
+    }
+  </style>
+</head>
+<body>
+  <img src="hello-kitty.png" alt="Hello Kitty" class="kitty" />
+  <h1>Hello Kanishka!</h1>
+  <p>Hello Kitty here! I brought you something magical today… three lovely games made with lots of love just for you. Once you finish them, there’s a little surprise waiting at the end. Ready to begin?</p>
+  <button class="start-btn" onclick="location.href='games.html'">Let’s Go!</button>
+</body>
+</html>
